@@ -29,7 +29,8 @@ class YouTube(object):
         else:
             self.url = f'https://www.youtube.com/channel/{self.id}/videos'
 
-        print(f'{args.module}> Fetching {self.url} ...')
+        if args.no_headings is not True:
+            print(f'{args.module}> Fetching {self.url} ...')
         page = requests.get(self.url, headers=headers)
         channel_title = Soup(page.text, 'html5lib').findAll(attrs={'property': 'og:title'})[0]['content']
         print(channel_title)
@@ -85,7 +86,8 @@ class Bitchute(object):
 
     def fetch(self):
         aggregate = []
-        print(f'{args.module}> Fetching {self.url} ...')
+        if args.no_headings is not True:
+            print(f'{args.module}> Fetching {self.url} ...')
         page = requests.get(self.url, headers=headers)
         channel_title = Soup(page.text, 'html5lib').findAll(attrs={'property': 'og:title'})[0]['content']
         print(channel_title)
@@ -127,7 +129,8 @@ def main(args):
     start = time.time()
 
     videos_fetched = args.func()
-    print(f'Fetched {videos_fetched} valid videos in {time.time() - start:.1f}s.')
+    if args.no_headings is not True:
+        print(f'Fetched {videos_fetched} valid videos in {time.time() - start:.1f}s.')
     exit(0)
 
 
@@ -135,8 +138,9 @@ def parse_args():
     parser = argparse.ArgumentParser(
         prog='cinews',
         description='Fetch newest videos from web.')
+    parser.add_argument('-s', '--no-headings', action='store_true', help="Removes fetching header and fetched footer.")
 
-    subparsers = parser.add_subparsers(title='modules', dest='module', help='Run video module')
+    subparsers = parser.add_subparsers(title='modules', dest='module', help='Run video module', required=True)
 
     # YouTube section
     parser_yt = subparsers.add_parser('youtube', help='Fetches from youtube.')

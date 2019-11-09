@@ -5,12 +5,13 @@
 # Usage
 
 ```
-usage: cinews [-h] {youtube,bitchute} ...
+usage: cinews [-h] [-s] {youtube,bitchute} ...
 
 Fetch newest videos from web.
 
 optional arguments:
   -h, --help          show this help message and exit
+  -s, --no-headings   Removes fetching header and fetched footer.
 
 modules:
   {youtube,bitchute}  Run video module
