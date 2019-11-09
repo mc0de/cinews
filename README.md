@@ -1,11 +1,28 @@
-# requirements
+# Requirements
 
 `$ pip3 install beautifulsoup4 html5lib`
 
-```
-usage: cinews [-h] [-u USER_ID | -c CHANNEL_ID]
+# Usage
 
-Fetch youtube videos by user or channel id.
+```
+usage: cinews [-h] {youtube,bitchute} ...
+
+Fetch newest videos from web.
+
+optional arguments:
+  -h, --help          show this help message and exit
+
+modules:
+  {youtube,bitchute}  Run video module
+    youtube           Fetches from youtube.
+    bitchute          Fetches from bitchute.
+```
+
+# Modules
+## YouTube
+
+```
+usage: cinews youtube [-h] (-u USER_ID | -c CHANNEL_ID)
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -13,4 +30,15 @@ optional arguments:
                         Youtube user id
   -c CHANNEL_ID, --channel-id CHANNEL_ID
                         Youtube channel id
+```
+
+## Bitchute
+
+```
+usage: cinews bitchute [-h] -c CHANNEL_ID
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CHANNEL_ID, --channel-id CHANNEL_ID
+                        Bitchute channel id
 ```
