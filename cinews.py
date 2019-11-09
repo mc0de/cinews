@@ -185,7 +185,7 @@ class SQL(object):
     def create(self, video_id, date, title):
         try:
             query = f'INSERT INTO {self.__table}(video_id, date, title, created_at) VALUES (?, ?, ?, ?);'
-            self.execute(query, (video_id, date, title, datetime.now().strftime('%Y-%m-%d')))
+            self.execute(query, (video_id, date, title, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             self.__connection.commit()
         except sqlite3.OperationalError:
             pass
