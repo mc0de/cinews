@@ -1,6 +1,6 @@
 # Requirements
 
-`$ pip3 install beautifulsoup4 html5lib slugify`
+`$ pip3 install beautifulsoup4 html5lib python-slugify`
 
 # Usage
 
