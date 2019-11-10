@@ -39,6 +39,7 @@ class YouTube(object):
         print(channel_title)
 
         videos = [item['data-context-item-id'] for item in Soup(page.text, 'html5lib').findAll(attrs={'data-context-item-id': True})]
+        videos = list(set(videos))
 
         return (channel_title, videos)
 
