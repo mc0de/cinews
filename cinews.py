@@ -141,12 +141,10 @@ class SQL(object):
         self.__table = 'data'
 
         if not os.path.isdir(self.path):
-            os.makedirs(self.path, mode=0o644)
-        if not os.path.exists(self.dest):
-            self.connect()
-            self.create_table()
-        else:
-            self.connect()
+            os.makedirs(self.path, exist_ok=True)
+
+        self.connect()
+        self.create_table()
 
     def connect(self):
         try:
@@ -172,7 +170,7 @@ class SQL(object):
 
     def create_table(self):
         try:
-            query = f"""CREATE TABLE {self.__table} (
+            query = f"""CREATE TABLE IF NOT EXISTS {self.__table} (
                 video_id TEXT PRIMARY KEY,
                 date TEXT,
                 title TEXT,
@@ -183,12 +181,9 @@ class SQL(object):
             raise
 
     def create(self, video_id, date, title):
-        try:
-            query = f'INSERT INTO {self.__table}(video_id, date, title, created_at) VALUES (?, ?, ?, ?);'
-            self.execute(query, (video_id, date, title, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            self.__connection.commit()
-        except sqlite3.OperationalError:
-            pass
+        query = f'INSERT INTO {self.__table}(video_id, date, title, created_at) VALUES (?, ?, ?, ?);'
+        self.execute(query, (video_id, date, title, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        self.__connection.commit()
 
     def find(self, video_id):
         return self.where('video_id', video_id)
